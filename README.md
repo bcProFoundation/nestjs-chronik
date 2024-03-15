@@ -44,7 +44,7 @@ use `@InjectChronikClient()` decorator in any injectables to get a `ChronikClien
 ```typescript
 import { Injectable } from '@nestjs/common';
 import { InjectChronikClient } from 'nestjs-chronik';
-import { MeiliSearch } from 'meilisearch';
+import { ChronikClient } from 'chronik-client';
 @Injectable()
 export class TestService {
   public constructor(
