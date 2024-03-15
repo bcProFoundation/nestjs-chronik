@@ -10,7 +10,7 @@ describe('ChronikModule', () => {
   it('should register the module with options', async () => {
     const registeredModule: DynamicModule = ChronikModule.forRoot({
       host: 'http://127.0.0.1',
-      networks: ['xec', 'xpi', 'xrg', 'bch']
+      networks: ['xec', 'xpi', 'xrg', 'bch'],
     });
 
     expect(registeredModule).toBeDefined();
@@ -25,7 +25,7 @@ describe('ChronikModule', () => {
     const registeredModule: DynamicModule = ChronikModule.forRootAsync({
       useFactory: () => ({
         host: 'http://127.0.0.1',
-        networks: ['xec', 'xpi', 'xrg', 'bch']
+        networks: ['xec', 'xpi', 'xrg', 'bch'],
       }),
     });
 

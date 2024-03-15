@@ -1,40 +1,62 @@
-<h1 align="center"></h1>
+## About
 
-<div align="center">
-  <a href="http://nestjs.com/" target="_blank">
-    <img src="https://nestjs.com/img/logo_text.svg" width="150" alt="Nest Logo" />
-  </a>
-</div>
+This package is a simple wrapper around [chronik-client] for Nestjs(https://www.npmjs.com/package/chronik-client).
 
-<h3 align="center">NestJS npm Package Starter</h3>
 
-<div align="center">
-  <a href="https://nestjs.com" target="_blank">
-    <img src="https://img.shields.io/badge/built%20with-NestJs-red.svg" alt="Built with NestJS">
-  </a>
-</div>
+## Installation
 
-### Installation
-
-1. Clone the repo
-2. Run npm/yarn install
+This package requires `chronik-client` dependency to work.
 
 ```bash
-cd nestjs-chronik
-npm install
+yarn add chronik-client nestjs-chronik
 ```
 
-## Change Log
+## Getting Started
 
-See [Changelog](CHANGELOG.md) for more information.
+The simplest way to use `nestjs-chronik` is to use `ChronikModule.forRoot` or `ChronikModule.forRootAsync`
 
-## Contributing
+```typescript
+import { Module } from '@nestjs-common';
+import { ChronikModule } from 'nestjs-chronik';
 
-Contributions welcome! See [Contributing](CONTRIBUTING.md).
+@Module({
+  imports: [
+    ChronikModule.forRoot({
+      host: 'https://chronik.be.cash',
+      networks: ['xec', 'xpi', 'xrg', 'bch']
+    }),
+  ],
+
+  // or async
+  ChronikModule.forRootAsync({
+    inject: [ConfigService],
+    useFactory: (config: ConfigService) => ({
+      host: config.get<string>('CHRONIK_URL') || 'https://chronik.be.cash',
+      networks: ['xec', 'xpi', 'xrg', 'bch']
+    }),
+  }),
+})
+export class AppModule {}
+```
+
+use `@InjectChronikClient()` decorator in any injectables to get a `ChronikClient` client inside class
+
+```typescript
+import { Injectable } from '@nestjs/common';
+import { InjectChronikClient } from 'nestjs-chronik';
+import { MeiliSearch } from 'meilisearch';
+@Injectable()
+export class TestService {
+  public constructor(
+    @InjectChronikClient('xec') private readonly chronikXec: ChronikClient,
+  ) {}
+}
+```
+
 
 ## Author
 
-**John Biundo (Y Prospect on [Discord](https://discord.gg/G7Qnnhy))**
+** Vince Tran ([Lixi](https://lixi.social/profile/lotus_16PSJMhnYSpfkeNLMjZVdyoLZ9wbk4CcQGFhaaw2Z))**
 
 ## License
 

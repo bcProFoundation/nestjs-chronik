@@ -8,7 +8,7 @@ describe('when called', () => {
       networks: ['xec', 'xpi', 'xrg', 'bch'],
     });
     expect(connectionProvider).toBeDefined();
-    for(const connection of Object.values(connectionProvider)) {
+    for (const connection of Object.values(connectionProvider)) {
       expect(connection).toBeInstanceOf(ChronikClient);
     }
   });

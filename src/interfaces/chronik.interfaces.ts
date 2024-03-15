@@ -14,10 +14,13 @@ export interface ChronikModuleOptionsFactory {
   createChronikOptions(): Promise<ChronikModuleOptions> | ChronikModuleOptions;
 }
 
-export interface ChronikModuleAsyncOptions extends Pick<ModuleMetadata, 'imports'> {
+export interface ChronikModuleAsyncOptions
+  extends Pick<ModuleMetadata, 'imports'> {
   useExisting?: Type<ChronikModuleOptionsFactory>;
   useClass?: Type<ChronikModuleOptionsFactory>;
-  useFactory?: (...args: any[]) => Promise<ChronikModuleOptions> | ChronikModuleOptions;
+  useFactory?: (
+    ...args: any[]
+  ) => Promise<ChronikModuleOptions> | ChronikModuleOptions;
   inject?: any[];
   extraProviders?: Provider[];
 }
