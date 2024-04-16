@@ -55,8 +55,8 @@ export class ChronikModule {
 
     return {
       module: ChronikModule,
-      providers: [chronikOptions, connectionProvider, ...childrenProviders],
-      exports: [connectionProvider, ...childrenProviders],
+      providers: [chronikOptions, connectionProvider, clientNodesProvider, ...childrenProviders],
+      exports: [connectionProvider, clientNodesProvider, ...childrenProviders],
     };
   }
 
@@ -114,9 +114,10 @@ export class ChronikModule {
       providers: [
         ...asyncProviders,
         connectionProvider,
+        clientNodesProvider,
         ...childrenProviders.filter((x) => !!x),
       ],
-      exports: [connectionProvider, ...childrenProviders.filter((x) => !!x)],
+      exports: [connectionProvider, clientNodesProvider, ...childrenProviders.filter((x) => !!x)],
     };
   }
 }
