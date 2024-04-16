@@ -1,6 +1,6 @@
 {
   "name": "nestjs-chronik",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "NestJS wrapper for chronik client",
   "author": "vince8x <vince.tran8x@gmail.com>",
   "license": "MIT",
