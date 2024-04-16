@@ -2,7 +2,6 @@
 
 This package is a simple wrapper around [chronik-client] for Nestjs(https://www.npmjs.com/package/chronik-client).
 
-
 ## Installation
 
 This package requires `chronik-client` dependency to work.
@@ -52,7 +51,6 @@ export class TestService {
   ) {}
 }
 ```
-
 
 ## Author
 

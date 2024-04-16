@@ -1,16 +1,19 @@
 import { DynamicModule, Global, Module, Provider } from '@nestjs/common';
 import {
   CHRONIK_CLIENTS,
+  CHRONIK_CLIENT_NODES,
   CHRONIK_MODULE_OPTIONS,
   CHRONIK_SUPPORT_COINS,
 } from './constants';
 import {
+  ChronikClientNodes,
   ChronikClients,
   ChronikModuleAsyncOptions,
   ChronikModuleOptions,
 } from './interfaces/chronik.interfaces';
 import {
   createAsyncProviders,
+  createChronikClientNodeFactory,
   createConnectionFactory,
 } from './providers/chronik.providers';
 
@@ -31,12 +34,22 @@ export class ChronikModule {
       useFactory: async () => await createConnectionFactory(options),
     };
 
+    const clientNodesProvider: Provider = {
+      provide: CHRONIK_CLIENT_NODES,
+      useFactory: async () => await createChronikClientNodeFactory(options),
+    };
+
     const childrenProviders: Provider[] = [];
     for (const network of options.networks) {
       childrenProviders.push({
         provide: `${CHRONIK_CLIENTS}_${network}`,
         inject: [CHRONIK_CLIENTS],
         useFactory: (clients: ChronikClients) => clients[network],
+      });
+      childrenProviders.push({
+        provide: `${CHRONIK_CLIENT_NODES}_${network}`,
+        inject: [CHRONIK_CLIENT_NODES],
+        useFactory: (nodes: ChronikClientNodes) => nodes[network],
       });
     }
 
@@ -57,6 +70,12 @@ export class ChronikModule {
         await createConnectionFactory(chronikOptions),
       inject: [CHRONIK_MODULE_OPTIONS],
     };
+    const clientNodesProvider: Provider = {
+      provide: CHRONIK_CLIENT_NODES,
+      useFactory: async (chronikOptions: ChronikModuleOptions) =>
+        await createChronikClientNodeFactory(chronikOptions),
+      inject: [CHRONIK_MODULE_OPTIONS],
+    };
 
     const asyncProviders = createAsyncProviders(options);
 
@@ -71,6 +90,18 @@ export class ChronikModule {
         ) => {
           if (chronikOptions.networks.includes(network)) {
             return clients[network];
+          }
+        },
+      });
+      childrenProviders.push({
+        provide: `${CHRONIK_CLIENT_NODES}_${network}`,
+        inject: [CHRONIK_CLIENT_NODES, CHRONIK_MODULE_OPTIONS],
+        useFactory: (
+          nodes: ChronikClientNodes,
+          chronikOptions: ChronikModuleOptions,
+        ) => {
+          if (chronikOptions.networks.includes(network)) {
+            return nodes[network];
           }
         },
       });
