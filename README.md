@@ -2,6 +2,7 @@
 
 This package is a simple wrapper around [chronik-client] for Nestjs(https://www.npmjs.com/package/chronik-client).
 
+
 ## Installation
 
 This package requires `chronik-client` dependency to work.
@@ -38,19 +39,21 @@ import { ChronikModule } from 'nestjs-chronik';
 export class AppModule {}
 ```
 
-use `@InjectChronikClient()` decorator in any injectables to get a `ChronikClient` client inside class
+use `@InjectChronikClient() and @InjectChronikClientNode()` decorator in any injectables to get a `ChronikClient and ChroniClientNode` client inside class
 
 ```typescript
 import { Injectable } from '@nestjs/common';
 import { InjectChronikClient } from 'nestjs-chronik';
-import { ChronikClient } from 'chronik-client';
+import { ChronikClient, ChroniClientNode } from 'chronik-client';
 @Injectable()
 export class TestService {
   public constructor(
     @InjectChronikClient('xec') private readonly chronikXec: ChronikClient,
+    @InjectChronikClientNode('xec') private readonly chronikNodeXec: ChronikClientNode,
   ) {}
 }
 ```
+
 
 ## Author
 
