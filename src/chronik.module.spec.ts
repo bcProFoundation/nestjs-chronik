@@ -9,8 +9,12 @@ describe('ChronikModule', () => {
 
   it('should register the module with options', async () => {
     const registeredModule: DynamicModule = ChronikModule.forRoot({
-      host: 'http://127.0.0.1',
-      networks: ['xec', 'xpi', 'xrg', 'bch'],
+      networks: {
+        xec: {
+          clientUrls: 'https://chronik.be.cash',
+          nodeUrls: ['https://chronik.be.cash', 'https://chronik.pay2stay.com'],
+        },
+      },
     });
 
     expect(registeredModule).toBeDefined();
@@ -24,8 +28,15 @@ describe('ChronikModule', () => {
   it('should register the module with async options', async () => {
     const registeredModule: DynamicModule = ChronikModule.forRootAsync({
       useFactory: () => ({
-        host: 'http://127.0.0.1',
-        networks: ['xec', 'xpi', 'xrg', 'bch'],
+        networks: {
+          xec: {
+            clientUrls: 'https://chronik.be.cash',
+            nodeUrls: [
+              'https://chronik.be.cash',
+              'https://chronik.pay2stay.com',
+            ],
+          },
+        },
       }),
     });
 

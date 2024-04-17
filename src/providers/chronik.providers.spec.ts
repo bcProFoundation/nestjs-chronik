@@ -10,9 +10,9 @@ describe('when called', () => {
       networks: {
         xec: {
           clientUrls: 'https://chronik.be.cash',
-          nodeUrls: ['https://chronik.be.cash', 'https://chronik.pay2stay.com']
-        }
-      } 
+          nodeUrls: ['https://chronik.be.cash', 'https://chronik.pay2stay.com'],
+        },
+      },
     });
     expect(connectionProvider).toBeDefined();
     for (const connection of Object.values(connectionProvider)) {
@@ -24,9 +24,9 @@ describe('when called', () => {
       networks: {
         xec: {
           clientUrls: 'https://chronik.be.cash',
-          nodeUrls: ['https://chronik.be.cash', 'https://chronik.pay2stay.com']
-        }
-      } 
+          nodeUrls: ['https://chronik.be.cash', 'https://chronik.pay2stay.com'],
+        },
+      },
     });
     expect(clientNodeProvider).toBeDefined();
     for (const connection of Object.values(clientNodeProvider)) {

@@ -3,13 +3,13 @@ import { ChronikClient, ChronikClientNode } from 'chronik-client';
 
 export interface ChronikHostConfig {
   clientUrls: string | string[];
-  nodeUrls: string[]
-};
+  nodeUrls: string[];
+}
 
 export interface ChronikModuleOptions {
   networks: {
     [network: string]: ChronikHostConfig;
-  }
+  };
 }
 
 export interface ChronikClients {

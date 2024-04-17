@@ -2,7 +2,6 @@
 
 This package is a simple wrapper around [chronik-client] for Nestjs(https://www.npmjs.com/package/chronik-client).
 
-
 ## Installation
 
 This package requires `chronik-client` dependency to work.
@@ -27,7 +26,7 @@ import { ChronikModule } from 'nestjs-chronik';
           clientUrls: ['https://chronik.be.cash/xec'],
           nodeUrls: ['https://chronik.be.cash/xec', 'chronik.pay2stay.com']
         }
-      } 
+      }
     }),
   ],
 
@@ -42,7 +41,7 @@ import { ChronikModule } from 'nestjs-chronik';
           clientUrls: [config.get<string>('CHRONIK_URL') || 'https://chronik.be.cash'],
           nodeUrls: [config.get<string>('CHRONIK_URL'), 'chronik.pay2stay.com']
         }
-      } 
+      }
     }),
   }),
 })
@@ -59,11 +58,11 @@ import { ChronikClient, ChroniClientNode } from 'chronik-client';
 export class TestService {
   public constructor(
     @InjectChronikClient('xec') private readonly chronikXec: ChronikClient,
-    @InjectChronikClientNode('xec') private readonly chronikNodeXec: ChronikClientNode,
+    @InjectChronikClientNode('xec')
+    private readonly chronikNodeXec: ChronikClientNode,
   ) {}
 }
 ```
-
 
 ## Author
 
