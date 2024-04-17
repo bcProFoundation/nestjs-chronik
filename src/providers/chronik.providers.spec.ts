@@ -7,8 +7,12 @@ import { ChronikClient, ChronikClientNode } from 'chronik-client';
 describe('when called', () => {
   it('it should provide chronik client', () => {
     const connectionProvider = createConnectionFactory({
-      host: 'http://127.0.0.1',
-      networks: ['xec', 'xpi', 'xrg', 'bch'],
+      networks: {
+        xec: {
+          clientUrls: 'https://chronik.be.cash',
+          nodeUrls: ['https://chronik.be.cash', 'https://chronik.pay2stay.com']
+        }
+      } 
     });
     expect(connectionProvider).toBeDefined();
     for (const connection of Object.values(connectionProvider)) {
@@ -17,8 +21,12 @@ describe('when called', () => {
   });
   it('it should provide chronik client node', () => {
     const clientNodeProvider = createChronikClientNodeFactory({
-      host: 'http://127.0.0.1',
-      networks: ['xec', 'xpi', 'xrg', 'bch'],
+      networks: {
+        xec: {
+          clientUrls: 'https://chronik.be.cash',
+          nodeUrls: ['https://chronik.be.cash', 'https://chronik.pay2stay.com']
+        }
+      } 
     });
     expect(clientNodeProvider).toBeDefined();
     for (const connection of Object.values(clientNodeProvider)) {

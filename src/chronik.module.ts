@@ -40,7 +40,7 @@ export class ChronikModule {
     };
 
     const childrenProviders: Provider[] = [];
-    for (const network of options.networks) {
+    for (const [network, chronikConfig] of Object.entries(options.networks)) {
       childrenProviders.push({
         provide: `${CHRONIK_CLIENTS}_${network}`,
         inject: [CHRONIK_CLIENTS],
@@ -88,7 +88,7 @@ export class ChronikModule {
           clients: ChronikClients,
           chronikOptions: ChronikModuleOptions,
         ) => {
-          if (chronikOptions.networks.includes(network)) {
+          if (chronikOptions.networks[network]) {
             return clients[network];
           }
         },
@@ -100,7 +100,7 @@ export class ChronikModule {
           nodes: ChronikClientNodes,
           chronikOptions: ChronikModuleOptions,
         ) => {
-          if (chronikOptions.networks.includes(network)) {
+          if (chronikOptions.networks[network]) {
             return nodes[network];
           }
         },

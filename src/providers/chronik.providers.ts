@@ -13,8 +13,8 @@ export function createConnectionFactory(
   options: ChronikModuleOptions,
 ): ChronikClients {
   const clients: { [network: string]: ChronikClient } = {};
-  for (const network of options.networks) {
-    const chronikClient = new ChronikClient(`${options.host}/${network}`);
+  for (const [network, config] of Object.entries(options.networks)) {
+    const chronikClient = new ChronikClient(config.clientUrls);
     clients[network] = chronikClient;
   }
   return clients;
@@ -24,8 +24,8 @@ export function createChronikClientNodeFactory(
   options: ChronikModuleOptions,
 ): ChronikClientNodes {
   const nodes: { [network: string]: ChronikClientNode } = {};
-  for (const network of options.networks) {
-    const node = new ChronikClientNode([`${options.host}/${network}`]);
+  for (const [network, config] of Object.entries(options.networks)) {
+    const node = new ChronikClientNode(config.nodeUrls);
     nodes[network] = node;
   }
   return nodes;

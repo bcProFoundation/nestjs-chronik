@@ -22,8 +22,12 @@ import { ChronikModule } from 'nestjs-chronik';
 @Module({
   imports: [
     ChronikModule.forRoot({
-      host: 'https://chronik.be.cash',
-      networks: ['xec', 'xpi', 'xrg', 'bch']
+      networks: {
+        xec: {
+          clientUrls: ['https://chronik.be.cash/xec'],
+          nodeUrls: ['https://chronik.be.cash/xec', 'chronik.pay2stay.com']
+        }
+      } 
     }),
   ],
 
@@ -33,6 +37,12 @@ import { ChronikModule } from 'nestjs-chronik';
     useFactory: (config: ConfigService) => ({
       host: config.get<string>('CHRONIK_URL') || 'https://chronik.be.cash',
       networks: ['xec', 'xpi', 'xrg', 'bch']
+      networks: {
+        xec: {
+          clientUrls: [config.get<string>('CHRONIK_URL') || 'https://chronik.be.cash'],
+          nodeUrls: [config.get<string>('CHRONIK_URL'), 'chronik.pay2stay.com']
+        }
+      } 
     }),
   }),
 })
