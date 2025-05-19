@@ -1,16 +1,16 @@
 import {
-  createChronikClientNodeFactory,
   createConnectionFactory,
+  createLegacyChronikClientFactory,
 } from '../providers/chronik.providers';
-import { ChronikClient, ChronikClientNode } from 'chronik-client';
+import { ChronikClient } from 'chronik-client';
+import { ChronikClient as LegacyChronikClient } from 'legacy-chronik-client';
 
 describe('when called', () => {
   it('it should provide chronik client', () => {
     const connectionProvider = createConnectionFactory({
       networks: {
         xec: {
-          clientUrls: 'https://chronik.be.cash',
-          nodeUrls: ['https://chronik.be.cash', 'https://chronik.pay2stay.com'],
+          clientUrls: ['https://chronik.be.cash/xec'],
         },
       },
     });
@@ -19,18 +19,17 @@ describe('when called', () => {
       expect(connection).toBeInstanceOf(ChronikClient);
     }
   });
-  it('it should provide chronik client node', () => {
-    const clientNodeProvider = createChronikClientNodeFactory({
+  it('it should provide legacy chronik client', () => {
+    const legacyClientProvider = createLegacyChronikClientFactory({
       networks: {
-        xec: {
-          clientUrls: 'https://chronik.be.cash',
-          nodeUrls: ['https://chronik.be.cash', 'https://chronik.pay2stay.com'],
+        xpi: {
+          clientUrls: ['https://chronik01.abcpay.cash/xpi'],
         },
       },
     });
-    expect(clientNodeProvider).toBeDefined();
-    for (const connection of Object.values(clientNodeProvider)) {
-      expect(connection).toBeInstanceOf(ChronikClientNode);
+    expect(legacyClientProvider).toBeDefined();
+    for (const connection of Object.values(legacyClientProvider)) {
+      expect(connection).toBeInstanceOf(LegacyChronikClient);
     }
   });
 });

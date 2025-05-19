@@ -1,20 +1,20 @@
 import { DynamicModule, Global, Module, Provider } from '@nestjs/common';
 import {
   CHRONIK_CLIENTS,
-  CHRONIK_CLIENT_NODES,
+  LEGACY_CHRONIK_CLIENTS,
   CHRONIK_MODULE_OPTIONS,
   CHRONIK_SUPPORT_COINS,
 } from './constants';
 import {
-  ChronikClientNodes,
   ChronikClients,
   ChronikModuleAsyncOptions,
   ChronikModuleOptions,
+  LegacyChronikClients,
 } from './interfaces/chronik.interfaces';
 import {
   createAsyncProviders,
-  createChronikClientNodeFactory,
   createConnectionFactory,
+  createLegacyChronikClientFactory,
 } from './providers/chronik.providers';
 
 @Global()
@@ -34,9 +34,9 @@ export class ChronikModule {
       useFactory: async () => await createConnectionFactory(options),
     };
 
-    const clientNodesProvider: Provider = {
-      provide: CHRONIK_CLIENT_NODES,
-      useFactory: async () => await createChronikClientNodeFactory(options),
+    const legacyClientProvider: Provider = {
+      provide: LEGACY_CHRONIK_CLIENTS,
+      useFactory: async () => await createLegacyChronikClientFactory(options),
     };
 
     const childrenProviders: Provider[] = [];
@@ -47,9 +47,9 @@ export class ChronikModule {
         useFactory: (clients: ChronikClients) => clients[network],
       });
       childrenProviders.push({
-        provide: `${CHRONIK_CLIENT_NODES}_${network}`,
-        inject: [CHRONIK_CLIENT_NODES],
-        useFactory: (nodes: ChronikClientNodes) => nodes[network],
+        provide: `${LEGACY_CHRONIK_CLIENTS}_${network}`,
+        inject: [LEGACY_CHRONIK_CLIENTS],
+        useFactory: (clients: LegacyChronikClients) => clients[network],
       });
     }
 
@@ -58,10 +58,10 @@ export class ChronikModule {
       providers: [
         chronikOptions,
         connectionProvider,
-        clientNodesProvider,
+        legacyClientProvider,
         ...childrenProviders,
       ],
-      exports: [connectionProvider, clientNodesProvider, ...childrenProviders],
+      exports: [connectionProvider, legacyClientProvider, ...childrenProviders],
     };
   }
 
@@ -75,10 +75,10 @@ export class ChronikModule {
         await createConnectionFactory(chronikOptions),
       inject: [CHRONIK_MODULE_OPTIONS],
     };
-    const clientNodesProvider: Provider = {
-      provide: CHRONIK_CLIENT_NODES,
+    const legacyClientProvider: Provider = {
+      provide: LEGACY_CHRONIK_CLIENTS,
       useFactory: async (chronikOptions: ChronikModuleOptions) =>
-        await createChronikClientNodeFactory(chronikOptions),
+        await createLegacyChronikClientFactory(chronikOptions),
       inject: [CHRONIK_MODULE_OPTIONS],
     };
 
@@ -99,14 +99,14 @@ export class ChronikModule {
         },
       });
       childrenProviders.push({
-        provide: `${CHRONIK_CLIENT_NODES}_${network}`,
-        inject: [CHRONIK_CLIENT_NODES, CHRONIK_MODULE_OPTIONS],
+        provide: `${LEGACY_CHRONIK_CLIENTS}_${network}`,
+        inject: [LEGACY_CHRONIK_CLIENTS, CHRONIK_MODULE_OPTIONS],
         useFactory: (
-          nodes: ChronikClientNodes,
+          clients: LegacyChronikClients,
           chronikOptions: ChronikModuleOptions,
         ) => {
           if (chronikOptions.networks[network]) {
-            return nodes[network];
+            return clients[network];
           }
         },
       });
@@ -119,12 +119,12 @@ export class ChronikModule {
       providers: [
         ...asyncProviders,
         connectionProvider,
-        clientNodesProvider,
+        legacyClientProvider,
         ...childrenProviders.filter((x) => !!x),
       ],
       exports: [
         connectionProvider,
-        clientNodesProvider,
+        legacyClientProvider,
         ...childrenProviders.filter((x) => !!x),
       ],
     };

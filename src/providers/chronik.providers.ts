@@ -1,11 +1,12 @@
 import {
-  ChronikClientNodes,
   ChronikClients,
   ChronikModuleAsyncOptions,
   ChronikModuleOptions,
   ChronikModuleOptionsFactory,
+  LegacyChronikClients,
 } from '../interfaces/chronik.interfaces';
-import { ChronikClient, ChronikClientNode } from 'chronik-client';
+import { ChronikClient } from 'chronik-client';
+import { ChronikClient as LegacyChronikClient } from 'legacy-chronik-client';
 import { Provider, Type } from '@nestjs/common';
 import { CHRONIK_MODULE_OPTIONS } from '../constants';
 
@@ -20,15 +21,15 @@ export function createConnectionFactory(
   return clients;
 }
 
-export function createChronikClientNodeFactory(
+export function createLegacyChronikClientFactory(
   options: ChronikModuleOptions,
-): ChronikClientNodes {
-  const nodes: { [network: string]: ChronikClientNode } = {};
+): LegacyChronikClients {
+  const clients: { [network: string]: LegacyChronikClient } = {};
   for (const [network, config] of Object.entries(options.networks)) {
-    const node = new ChronikClientNode(config.nodeUrls);
-    nodes[network] = node;
+    const client = new LegacyChronikClient(config.clientUrls);
+    clients[network] = client;
   }
-  return nodes;
+  return clients;
 }
 
 export function createAsyncProviders(

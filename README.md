@@ -24,7 +24,6 @@ import { ChronikModule } from 'nestjs-chronik';
       networks: {
         xec: {
           clientUrls: ['https://chronik.be.cash/xec'],
-          nodeUrls: ['https://chronik.be.cash/xec', 'chronik.pay2stay.com']
         }
       }
     }),
@@ -39,7 +38,6 @@ import { ChronikModule } from 'nestjs-chronik';
       networks: {
         xec: {
           clientUrls: [config.get<string>('CHRONIK_URL') || 'https://chronik.be.cash'],
-          nodeUrls: [config.get<string>('CHRONIK_URL'), 'chronik.pay2stay.com']
         }
       }
     }),
@@ -48,18 +46,27 @@ import { ChronikModule } from 'nestjs-chronik';
 export class AppModule {}
 ```
 
-use `@InjectChronikClient() and @InjectChronikClientNode()` decorator in any injectables to get a `ChronikClient and ChroniClientNode` client inside class
+For legacy chronik nodes (xpi, xrg), we need to use chronik-client version lower than 0.26.0
+
+```package.json
+"dependencies": {
+  "legacy-chronik-client": "npm:chronik-client@0.26.0"
+},
+```
+
+use `@InjectChronikClient() and @InjectLegacyChronikClient()` decorator in any injectables to get a `ChronikClient and LegacyChronikClient` client inside class
 
 ```typescript
 import { Injectable } from '@nestjs/common';
 import { InjectChronikClient } from 'nestjs-chronik';
-import { ChronikClient, ChroniClientNode } from 'chronik-client';
+import { ChronikClient } from 'chronik-client';
+import { ChronikClient as LegacyChronikClient } from 'legacy-chronik-client';
 @Injectable()
 export class TestService {
   public constructor(
     @InjectChronikClient('xec') private readonly chronikXec: ChronikClient,
-    @InjectChronikClientNode('xec')
-    private readonly chronikNodeXec: ChronikClientNode,
+    @InjectLegacyChronikClient('xpi')
+    private readonly chronikXpi: LegacyChronikClient,
   ) {}
 }
 ```

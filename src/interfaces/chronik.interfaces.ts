@@ -1,9 +1,9 @@
 import { ModuleMetadata, Provider, Type } from '@nestjs/common';
-import { ChronikClient, ChronikClientNode } from 'chronik-client';
+import { ChronikClient } from 'chronik-client';
+import { ChronikClient as LegacyChronikClient } from 'legacy-chronik-client';
 
 export interface ChronikHostConfig {
-  clientUrls: string | string[];
-  nodeUrls: string[];
+  clientUrls: string[];
 }
 
 export interface ChronikModuleOptions {
@@ -16,8 +16,8 @@ export interface ChronikClients {
   [network: string]: ChronikClient;
 }
 
-export interface ChronikClientNodes {
-  [network: string]: ChronikClientNode;
+export interface LegacyChronikClients {
+  [network: string]: LegacyChronikClient;
 }
 
 export interface ChronikModuleOptionsFactory {

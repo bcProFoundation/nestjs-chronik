@@ -1,6 +1,6 @@
 {
   "name": "nestjs-chronik",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "NestJS wrapper for chronik client",
   "author": "vince8x <vince.tran8x@gmail.com>",
   "license": "MIT",
@@ -33,9 +33,12 @@
     "url": "https://github.com/bcProFoundation/nestjs-chronik"
   },
   "bugs": "https://github.com/bcProFoundation/nestjs-chronik",
+  "dependencies": {
+    "legacy-chronik-client": "npm:chronik-client@0.26.0"
+  },
   "peerDependencies": {
     "@nestjs/common": "^8.0.0 || ^9.3.9 || ^10.1.3",
-    "chronik-client": "~0.26.2"
+    "chronik-client": "^3.1.1"
   },
   "devDependencies": {
     "@commitlint/cli": "19.1.0",

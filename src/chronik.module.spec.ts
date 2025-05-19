@@ -11,9 +11,11 @@ describe('ChronikModule', () => {
     const registeredModule: DynamicModule = ChronikModule.forRoot({
       networks: {
         xec: {
-          clientUrls: 'https://chronik.be.cash',
-          nodeUrls: ['https://chronik.be.cash', 'https://chronik.pay2stay.com'],
+          clientUrls: ['https://chronik.be.cash/xec'],
         },
+        xpi: {
+          clientUrls: ['https://chronik01.abcpay.cash/xpi'],
+        }
       },
     });
 
@@ -30,12 +32,11 @@ describe('ChronikModule', () => {
       useFactory: () => ({
         networks: {
           xec: {
-            clientUrls: 'https://chronik.be.cash',
-            nodeUrls: [
-              'https://chronik.be.cash',
-              'https://chronik.pay2stay.com',
-            ],
+            clientUrls: ['https://chronik.be.cash/xec'],
           },
+        xpi: {
+          clientUrls: ['https://chronik01.abcpay.cash/xpi'],
+        }
         },
       }),
     });

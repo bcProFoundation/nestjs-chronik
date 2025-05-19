@@ -9,8 +9,11 @@ importers:
   .:
     dependencies:
       chronik-client:
-        specifier: ~0.26.2
-        version: 0.26.2
+        specifier: ^3.1.1
+        version: 3.1.1
+      legacy-chronik-client:
+        specifier: npm:chronik-client@0.26.0
+        version: chronik-client@0.26.0
     devDependencies:
       '@commitlint/cli':
         specifier: 19.1.0
@@ -1056,8 +1059,11 @@ packages:
     resolution: {integrity: sha512-7VT13fmjotKpGipCW9JEQAusEPE+Ei8nl6/g4FBAmIm0GOOLMua9NDDo/DWp0ZAxCr3cPq5ZpBqmPAQgDda2Pw==}
     engines: {node: '>= 8.10.0'}
 
-  chronik-client@0.26.2:
-    resolution: {integrity: sha512-mGuJVWEhMvJ2ZROGIunmoGaa660ODlrxQet5wypQYPYAUjwb/PFbBjao+66vVe6qhkpLBsQf5qp7Ro6Cqn5JEg==}
+  chronik-client@0.26.0:
+    resolution: {integrity: sha512-FHFABcQI0NspZO3sr4yyucnbd+61GXeVtqnfrVdv+dGBzzciPRsEHNapCgNqmpziec37tnXToM5azzP9ZdcO3g==}
+
+  chronik-client@3.1.1:
+    resolution: {integrity: sha512-l464A3sbZwhq/UsNlSzaJuBS57Ld6PmUEDSu3RCCJLm/Zxz2920+pVvFru89WdWUtuThFb77RrOf2mA9K3OQBg==}
 
   ci-info@3.9.0:
     resolution: {integrity: sha512-NIxF55hv4nSqQswkAeiOi1r83xy8JldOFDTWiug55KBu9Jnblncd2U6ViHmYgHf01TPZS77NJBhBMKdWj9HQMQ==}
@@ -1259,6 +1265,9 @@ packages:
 
   ecashaddrjs@1.5.8:
     resolution: {integrity: sha512-EBL052a1Hd1+wwaBQr3Q+jXY4XfH0jXR1tK360P8GQ9YJUZ5zLG+0I7yee8/QgHY04zdoCzDOY0fRlwqtqDhRg==}
+
+  ecashaddrjs@2.0.0:
+    resolution: {integrity: sha512-EvK1V4D3+nIEoD0ggy/b0F4lW39/72R9aOs/scm6kxMVuXu16btc+H74eQv7okNfXaQWKgolEekZkQ6wfcMMLw==}
 
   electron-to-chromium@1.5.13:
     resolution: {integrity: sha512-lbBcvtIJ4J6sS4tb5TLp1b4LyfCdMkwStzXPyAgVgTRAsep4bvrAGaBOP7ZJtQMNJpSQ9SqG4brWOroNaQtm7Q==}
@@ -3977,11 +3986,24 @@ snapshots:
     optionalDependencies:
       fsevents: 2.3.3
 
-  chronik-client@0.26.2:
+  chronik-client@0.26.0:
     dependencies:
       '@types/ws': 8.5.12
       axios: 1.7.5
       ecashaddrjs: 1.5.8
+      isomorphic-ws: 4.0.1(ws@8.18.0)
+      protobufjs: 6.11.4
+      ws: 8.18.0
+    transitivePeerDependencies:
+      - bufferutil
+      - debug
+      - utf-8-validate
+
+  chronik-client@3.1.1:
+    dependencies:
+      '@types/ws': 8.5.12
+      axios: 1.7.5
+      ecashaddrjs: 2.0.0
       isomorphic-ws: 4.0.1(ws@8.18.0)
       protobufjs: 6.11.4
       ws: 8.18.0
@@ -4164,6 +4186,8 @@ snapshots:
     dependencies:
       big-integer: 1.6.36
       bs58check: 3.0.1
+
+  ecashaddrjs@2.0.0: {}
 
   electron-to-chromium@1.5.13: {}
 
